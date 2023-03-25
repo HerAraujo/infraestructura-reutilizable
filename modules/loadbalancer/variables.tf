@@ -26,3 +26,9 @@ variable "puerto_lb" {
   type        = number
   default     = 80
 }
+
+variable "entorno" {
+  description = "Entorno en el que estamos trabajando"
+  type        = string
+  default     = ""
+}

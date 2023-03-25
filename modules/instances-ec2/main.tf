@@ -25,7 +25,7 @@ resource "aws_instance" "servidor" {
 # Define un grupo de seguridad con acceso al puerto 8080
 # ------------------------------------------------------
 resource "aws_security_group" "mi_grupo_de_seguridad" {
-  name = "primer-servidor-sg"
+  name = "servidores-sg-${var.entorno}"
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]

@@ -6,8 +6,9 @@ provider "aws" {
 }
 
 locals {
-  region = "us-east-2"
-  ami    = var.ubuntu_ami[local.region]
+  region  = "us-east-2"
+  ami     = var.ubuntu_ami[local.region]
+  entorno = "prod"
 }
 
 # -----------------------------------------------
@@ -19,7 +20,7 @@ data "aws_subnet" "public_subnet" {
 }
 
 module "servidores_ec2" {
-  source = "./modules/instances-ec2"
+  source = "../../modules/instances-ec2"
 
   puerto_servidor = 8080
   tipo_instancia  = "t2.micro"
@@ -28,14 +29,15 @@ module "servidores_ec2" {
     for id_servidor, datos in var.servidores :
     id_servidor => { nombre = datos.nombre, subnet_id = data.aws_subnet.public_subnet[id_servidor].id }
   }
-
+  entorno = local.entorno
 }
 
 module "loadbalancer" {
-  source = "./modules/loadbalancer"
+  source = "../../modules/loadbalancer"
 
   subnet_id       = [for subnet in data.aws_subnet.public_subnet : subnet.id]
   instancia_ids   = module.servidores_ec2.instancia_ids
   puerto_lb       = 80
   puerto_servidor = 8080
+  entorno         = local.entorno
 }
