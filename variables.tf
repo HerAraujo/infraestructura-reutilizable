@@ -42,6 +42,6 @@ variable "servidores" {
   default = {
     "ser=1" = { nombre = "servidor-1", az = "a" },
     "ser=2" = { nombre = "servidor-2", az = "b" },
-    "ser=3" = { nombre = "servidor-3", az = "c" },
+    // Podemos agregar la cantidad de servidores que querramos y sea necesario
   }
 }

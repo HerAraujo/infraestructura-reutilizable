@@ -23,8 +23,8 @@ variable "ami_id" {
 variable "servidores" {
   description = "Mapa de servidores con s correspondiente subnet_id"
   type = map(object({
-    nombre = string,
-    az     = string
+    nombre    = string,
+    subnet_id = string
     })
   )
 }

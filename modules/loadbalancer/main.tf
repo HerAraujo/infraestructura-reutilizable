@@ -63,10 +63,10 @@ resource "aws_lb_target_group" "this" {
 # Attachment para el servidor 1
 # -----------------------------
 resource "aws_lb_target_group_attachment" "servidor" {
-  for_each = var.instancia_ids
+  count = length(var.instancia_ids)
 
   target_group_arn = aws_lb_target_group.this.arn
-  target_id        = each.value
+  target_id        = element(var.instancia_ids, count.index)
   port             = var.puerto_servidor
 }
 
